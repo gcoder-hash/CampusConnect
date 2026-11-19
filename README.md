@@ -1,85 +1,204 @@
-# CampusConnect — Complete Placement Portal
+# CampusConnect — Campus Placement & Recruitment Portal
 
-A full-stack, non-AI campus placement portal built with React, Vite, Node.js, Express, SQLite, JWT authentication, bcrypt password hashing, and private PDF resume uploads.
+A full-stack campus placement platform that connects students with recruiters through a centralized job application system.
 
-## Included features
+CampusConnect is built using **React, Vite, Node.js, Express, and SQLite**, with JWT-based authentication and secure resume management. It is a non-AI project designed to demonstrate practical full-stack development, authentication, database management, and role-based access control.
 
-### Student accounts
+## Features
+
+### Student Portal
 - Student registration with name, email, college registration number, and password.
-- Login and protected student workspace.
-- Browse and search open jobs; open full job details inside CampusConnect.
-- Apply to a job by uploading a PDF resume (maximum 5 MB).
-- Prevent duplicate applications; track status and withdraw an application.
+- Secure login and protected student dashboard.
+- Browse and search available placement opportunities.
+- View complete job descriptions and application deadlines.
+- Apply for jobs by uploading a PDF resume (maximum 5 MB).
+- Prevent duplicate applications.
+- Track application status.
+- Withdraw submitted applications.
 
-### Recruiter accounts
+### Recruiter Portal
 - Recruiter registration with name, email, company name, and password.
-- Post, edit, and remove only the recruiter's own jobs.
-- Required application deadline; expired jobs automatically close and are hidden from student listings. The API also rejects applications after the deadline.
-- View applicants for the recruiter's own jobs, view/download their resumes, and update application status.
+- Secure recruiter login.
+- Create, edit, and delete job postings.
+- Manage only jobs owned by the logged-in recruiter.
+- Set application deadlines.
+- View applicants for posted jobs.
+- Access applicant resumes through authenticated endpoints.
+- Update application statuses.
 
-### Security and storage
-- Passwords are stored as bcrypt hashes; authentication uses signed 12-hour JWTs.
-- API routes enforce authentication, role permissions, and ownership checks.
-- Resume files are stored privately and served only through an authenticated recruiter endpoint with job-ownership validation.
-- SQLite database is created automatically in `backend/data/`; uploaded resumes are stored in `backend/uploads/`.
+### Security & Backend
+- bcrypt password hashing.
+- JWT authentication with 12-hour token expiry.
+- Role-based authorization for students and recruiters.
+- Ownership validation for job and application operations.
+- Private PDF resume storage.
+- Server-side application deadline validation.
+- SQLite database initialization.
 
-## Requirements
-- Node.js 22 LTS (recommended) and npm.
-- macOS, Windows, or Linux.
+## Technology Stack
 
-## Setup (Mac)
-1. Extract this ZIP. The extracted folder is `CampusConnect_Complete`.
-2. Open Terminal and enter the project folder (adjust if you extracted elsewhere):
-   ```bash
-   cd ~/Downloads/CampusConnect_Complete
-   ```
-3. Create the private environment file: `cp backend/.env.example backend/.env`
-4. Open `backend/.env` and replace `JWT_SECRET` with a long random value. Do not share this value.
-5. Install all dependencies: `npm run install:all`
-6. Start both servers: `npm run dev`
-7. Open **http://localhost:5173** in your browser. Keep Terminal open while using the app.
+| Layer | Technologies |
+|---|---|
+| Frontend | React, Vite, JavaScript, CSS |
+| Backend | Node.js, Express.js |
+| Database | SQLite |
+| Authentication | JWT |
+| Password Security | bcrypt |
+| File Uploads | PDF resume upload handling |
+| Version Control | Git, GitHub |
 
-## Setup (Windows)
-1. Extract the ZIP and open PowerShell in `CampusConnect_Complete`.
-2. Run `Copy-Item backend/.env.example backend/.env`.
-3. Edit `backend/.env` and set a private long `JWT_SECRET`.
-4. Run `npm run install:all`, then `npm run dev`.
-5. Open **http://localhost:5173**.
+## Project Architecture
 
-## Demo recruiter account
-- Email: `recruiter@campusconnect.demo`
-- Password: `Demo@123`
-- Select **I'm hiring** at login.
-
-You can register a new student account using a unique email and college registration number. The demo recruiter is seeded locally for testing. Change/remove the demo credentials before any public deployment.
-
-## Ports
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:4000`
-- Health check: `http://localhost:4000/api/health`
-
-If a port is already occupied, stop the old development server with Control+C in its Terminal window. If that window is unavailable, inspect the process with `lsof -nP -iTCP:4000 -sTCP:LISTEN` or port 5173 and stop only the listed process.
-
-## Project layout
 ```text
-CampusConnect_Complete/
+CampusConnect/
+│
 ├── backend/
-│   ├── data/                 # SQLite database created on first run
-│   ├── uploads/              # Private PDF resumes
+│   ├── data/
+│   ├── uploads/
 │   ├── db.js
 │   ├── middleware.js
 │   ├── server.js
 │   ├── package.json
 │   └── .env.example
+│
 ├── frontend/
-│   ├── src/main.jsx
-│   ├── src/style.css
+│   ├── src/
+│   │   ├── main.jsx
+│   │   └── style.css
 │   ├── index.html
-│   └── vite.config.js
+│   ├── vite.config.js
+│   └── package.json
+│
 ├── docs/
+│   ├── INTERVIEW_POINTS.md
+│   └── PROJECT_ARCHITECTURE.md
+│
 ├── package.json
 └── README.md
 ```
 
-## Important deployment note
-This is a local development/portfolio project. Before public deployment, use HTTPS, production secrets, rate limiting, stricter PDF content validation and malware scanning, backups, audit logging, and a production database strategy.
+## Installation & Setup
+
+### Prerequisites
+
+- Node.js 22 LTS recommended.
+- npm.
+- Git.
+- macOS, Windows, or Linux.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/gcoder-hash/CampusConnect.git
+cd CampusConnect
+```
+
+### 2. Configure environment variables
+
+For macOS/Linux:
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+For Windows PowerShell:
+
+```powershell
+Copy-Item backend/.env.example backend/.env
+```
+
+Open `backend/.env` and configure a strong, private `JWT_SECRET` using the variable name expected by the example file.
+
+Never commit your actual `.env` file or production secrets.
+
+### 3. Install dependencies
+
+```bash
+npm run install:all
+```
+
+### 4. Start the application
+
+```bash
+npm run dev
+```
+
+### 5. Open the application
+
+Frontend: http://localhost:5173
+
+Backend API: http://localhost:4000
+
+Health check: http://localhost:4000/api/health
+
+Keep the terminal running while using the application.
+
+## Application Workflow
+
+**Student workflow**
+
+1. Register as a student.
+2. Log in to the student dashboard.
+3. Browse available placement opportunities.
+4. Open a job and review its details.
+5. Upload a PDF resume and submit an application.
+6. Track or withdraw an application.
+
+**Recruiter workflow**
+
+1. Register as a recruiter.
+2. Log in to the recruiter dashboard.
+3. Create a job posting with an application deadline.
+4. Review applicants.
+5. View applicant resumes.
+6. Update application statuses.
+
+## Screenshots
+
+Add screenshots of the actual running application here.
+
+Suggested screenshots:
+
+- [ ] Landing page
+- [ ] Student registration and login
+- [ ] Student dashboard
+- [ ] Job listing and job details
+- [ ] Resume application form
+- [ ] Recruiter dashboard
+- [ ] Job creation form
+- [ ] Applicant management
+
+## Security Considerations
+
+CampusConnect includes authentication and authorization mechanisms intended to protect student and recruiter operations.
+
+Before deploying publicly, additional production safeguards are recommended:
+
+- HTTPS enforcement.
+- Production-grade secret management.
+- API rate limiting.
+- Stronger file-content validation.
+- Malware scanning for uploaded documents.
+- Database backups.
+- Audit logging.
+- Production database configuration.
+
+## Future Improvements
+
+- Email notifications for application status changes.
+- Advanced job search filters.
+- Recruiter analytics dashboard.
+- Student profile management.
+- Cloud-based resume storage.
+- Production deployment.
+
+## Project Information
+
+**Project:** CampusConnect  
+**Category:** Full-Stack Web Development  
+**Architecture:** Client–Server  
+**Repository:** https://github.com/gcoder-hash/CampusConnect
+
+---
+
+*CampusConnect is a portfolio and educational project demonstrating full-stack web development and campus recruitment workflows.*
